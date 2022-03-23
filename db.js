@@ -4,7 +4,7 @@ const pool = new Pool({
   password: "TyLTyL!378",
   host: "localhost",
   port: 5433,
-  database: "perntodo"
+  database: "jwtlogindb"
 });
 
 module.exports = pool;

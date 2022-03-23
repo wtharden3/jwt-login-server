@@ -7,7 +7,11 @@ const pool = require('./db');
 app.use(express.json()); // for req.body
 app.use(cors());
 
-//routes
+//ROUTES//
+
+//register and login routes
+app.use('/auth', require('./src/routes/jwtAuth'));
+
 
 
 app.listen(4848, () => {
