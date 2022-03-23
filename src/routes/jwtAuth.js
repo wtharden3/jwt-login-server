@@ -1,12 +1,13 @@
 const pool = require('../../db');
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
+const validInfo = require('../middlewares/validInfo');
 
 
 const router = require('express').Router();
 
 //register
-router.post('/register', async (req,res) => {
+router.post('/register', validInfo, async (req,res) => {
   try {
     const startTime = new Date();
     // 1. destructure req.body (name, email, password)
@@ -38,13 +39,13 @@ router.post('/register', async (req,res) => {
      })
     
   } catch (err) {
-    console.error(`[ERROR]: ${err.message}`);
+    console.error(`[❗️ SERVER ERROR ❗️]: ${err.message}`);
     res.status(500).send(`[SEVER] Error at Registration!`)
   }
 })
 
 // login route
-router.post('/login', async (req, res) => {
+router.post('/login', validInfo, async (req, res) => {
   try {
     const startTime = new Date();
     // 1. desstructure req.body
@@ -66,7 +67,7 @@ router.post('/login', async (req, res) => {
         });
     }
   } catch (err) {
-    console.error(`[SERVER ERROR 🔥]: ${err.message}`);
+    console.error(`[❗️ SERVER ERROR ❗️]: ${err.message}`);
     res.status(500).send(`[SEVER] Error at Login!`)
   }
 })
