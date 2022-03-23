@@ -8,6 +8,7 @@ const router = require('express').Router();
 //register
 router.post('/register', async (req,res) => {
   try {
+    const fromDate = new Date();
     // 1. destructure req.body (name, email, password)
    const {name, email, password} = req.body;
    // 2. check if user exists
@@ -27,10 +28,12 @@ router.post('/register', async (req,res) => {
    //res.json(newUser.rows[0]);
    // 5. generate jwt token
    const token = jwtGenerator(newUser.rows[0].user_id)
-   res.status(200).json({
+   const toDate = new Date();
+   return res.status(200).json({
      message: `User ${newUser.rows[0].user_name} created!`,
      user: newUser.rows[0],
-     token: token
+     token: token,
+     elapsed: `This took ${toDate.getTime() - fromDate.getTime()} milliseconds.`
      })
     
   } catch (err) {
@@ -42,6 +45,7 @@ router.post('/register', async (req,res) => {
 // login route
 router.post('/login', async (req, res) => {
   try {
+    const fromDate = new Date();
     // 1. desstructure req.body
     const {email, password} = req.body;
 
@@ -54,11 +58,12 @@ router.post('/login', async (req, res) => {
    }
    const validPassword = await bcrypt.compare(password, loginUser.rows[0].user_password);
    if(validPassword){
-     
+     const toDate = new Date();
      return res.status(200).json({
        message: `Welcome, ${loginUser.rows[0].user_name}!`,
        user: loginUser.rows[0],
-       token: jwtGenerator(loginUser.rows[0].user_id)
+       token: jwtGenerator(loginUser.rows[0].user_id),
+       elapsed: `This took ${toDate.getTime() - fromDate.getTime()} milliseconds.`
       });
    }
     // res.json(loginUser.rows[0]);
