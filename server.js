@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const pool = require('./db');
+require("dotenv").config();
 
 //middleware
 app.use(express.json()); // for req.body
@@ -14,6 +15,9 @@ app.use('/auth', require('./src/routes/jwtAuth'));
 
 
 
-app.listen(4848, () => {
-  console.log(`[SERVER] You are listening on port 4848`);
+app.listen(process.env.PORT, () => {
+  console.log(`[SERVER] You are listening on port ${process.env.PORT}`);
+  // create database if does not exist
+  // add extension if not exist
+  // create user table if not exist
 });
