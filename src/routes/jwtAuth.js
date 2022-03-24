@@ -2,6 +2,7 @@ const pool = require('../../db');
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
 const validInfo = require('../middlewares/validInfo');
+const authorize = require('../middlewares/authorize');
 
 
 const router = require('express').Router();
@@ -69,6 +70,15 @@ router.post('/login', validInfo, async (req, res) => {
   } catch (err) {
     console.error(`[❗️ SERVER ERROR ❗️]: ${err.message}`);
     res.status(500).send(`[SEVER] Error at Login!`)
+  }
+})
+
+router.post('/verify', authorize, (req, res) => {
+  try {
+    res.json(true);
+  } catch (err) {
+    console.error(`[❗️ SERVER ERROR ❗️]: ${err.message}`);
+    res.status(500).send(`[SEVER] Error at Verification!`)
   }
 })
 
