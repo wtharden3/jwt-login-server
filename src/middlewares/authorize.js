@@ -12,7 +12,7 @@ module.exports = async (req,res,next) => {
   try {
     const verify = jwt.verify(token, process.env.jwtSecret);
 
-    req.user = verify;
+    req.user = verify.user;
     next();
   } catch (err) {
     console.error(`[❗️ SERVER ERROR ❗️]: ${err.message}`);
