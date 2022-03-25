@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const pool = require('./db');
+// const pool = require('./db');
 require("dotenv").config();
 
 //middleware
-app.use(express.json()); // for req.body
 app.use(cors());
+app.use(express.json()); // for req.body
 
 //ROUTES//
 
@@ -15,7 +15,6 @@ app.use('/auth', require('./src/routes/jwtAuth'));
 
 //dashboard routes
 app.use('/dashboard', require('./src/routes/dashboard'));
-
 
 
 app.listen(process.env.PORT, () => {
